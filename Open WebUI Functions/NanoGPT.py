@@ -14,7 +14,7 @@ import requests
 import json
 import time
 from open_webui.utils.misc import pop_system_message
-from open_webui.main import chat_completion_tools_handler
+from open_webui.main import chat_completion
 from open_webui.config import get_config, save_config, BannerModel
 
 current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -142,8 +142,8 @@ class Pipe:
 
             # Remove the system message from `messages` and pass it as top-level
             model_name = body.get("model", "")
-            if model_name.startswith("nanogpt2."):
-                model_name = model_name[len("nanogpt2.") :]
+            if "." in model_name:
+                model_name = model_name.split(".", 1)[1]
 
             payload = {
                 "model": model_name,
